@@ -6,11 +6,10 @@ import { login } from '../../actions/auth';
 
 class LoginPage extends Component {
 
-  submit = (data) => {
-    // dispatch login action to reducers, so now go to ../actions/auth.js
-    // if successful, return to HomePage
-    this.props.login(data).then(() => this.props.history.push('/'));
-  }
+  // dispatch login action to reducers, so now go to ../actions/auth.js
+  // if successful, return to HomePage otherwise return promise
+  submit = (data) => this.props.login(data).then(() =>
+    this.props.history.push('/'));
 
   render() {
     return (
