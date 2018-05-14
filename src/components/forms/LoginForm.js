@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Form, Button } from 'semantic-ui-react';
 import Validator from 'validator';
 import InlineError from '../messages/InlineError';
@@ -20,10 +21,14 @@ class LoginForm extends Component {
   });
 
   onSubmit = () => {
-    // validate data
+    // errors object will have text if validation catches errors
     const errors = this.validate(this.state.data);
     this.setState({ errors });
-    // pass to submit function
+
+    // if there are no errors
+    if (Object.keys(errors).length === 0) {
+      this.props.submit(this.state.data);
+    }
   }
 
   validate = (data) => {
@@ -67,5 +72,10 @@ class LoginForm extends Component {
     );
   }
 }
+// this means that the parent of this component (LoginPage) MUST pass
+// a function to the child called 'submit'
+LoginForm.propTypes = {
+  submit: PropTypes.func.isRequired
+};
 
 export default LoginForm;
